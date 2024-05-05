@@ -9,7 +9,7 @@
 </div>
 
 <div>
-  <a href="/delete_student/<%= student.id %>">
+  <a href="/delete_student/<%= @student.id %>"> <!-- Corrected to use @student.id -->
     Delete student
   </a>
 </div>
@@ -21,7 +21,6 @@
     <label for="email_box">
       Email
     </label>
-
     <input type="text" id="email_box" name="query_email" value="<%= @student.email %>">
   </div>
 
@@ -29,7 +28,6 @@
     <label for="first_name_box">
       First name
     </label>
-
     <input type="text" id="first_name_box" name="query_first_name" value="<%= @student.first_name %>">
   </div>
 
@@ -37,7 +35,6 @@
     <label for="last_name_box">
       Last name
     </label>
-
     <input type="text" id="last_name_box" name="query_last_name" value="<%= @student.last_name %>">
   </div>
 
@@ -76,14 +73,12 @@
 <h3>Course Load</h3>
 
 <form action="/insert_enrollment" method="post">
-
   <input type="hidden" id="student_id_box" name="query_student_id" value="<%= @student.id %>">
 
   <div>
     <label for="course_id_box">
       Course
     </label>
-
     <select id="course_id_box" name="query_course_id">
       <% Course.order({ :title => :asc }).each do |a_course| %>
         <option value="<%= a_course.id %>">
@@ -101,9 +96,9 @@
 <hr>
 
 <ul>
-  <% enrollments = Enrollment.where({:student_id => student.id }) %>
+  <% enrollments = Enrollment.where({ :student_id => @student.id }) %> <!-- Corrected to use @student.id -->
   <% enrollments.each do |enrollment| %>
-    <% course = course.where({ :id => enrollment.course_id }).at(0) %>
+    <% course = Course.where({ :id => enrollment.course_id }).at(0) %> <!-- Corrected to use Course.where -->
     <li>
       <a href="/courses/<%= course.id %>">
         <%= course.title %>
